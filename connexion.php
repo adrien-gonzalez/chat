@@ -58,7 +58,11 @@ if(isset($_POST["send"])){
         <?php
     }
     else{
-       
+        $_SESSION["user"]->connexion($_POST["login"],$_POST["psw"]);
+        $_SESSION["login"] = true;
+        if($_SESSION['user']->getrole() == "admin"){
+            $_SESSION["perm"] = true;
+        }
         header('location:index.php');
     }
     

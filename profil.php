@@ -36,15 +36,20 @@ if($_SESSION['user']->isConnected() != true){
 
     <section class="bloc">
         <h3>Mes Informations</h3>
-            <?php
-          $_SESSION["user"]->mes_info();
-          ?>
+          <article>
+              <ul>
+                  <li>Mon pseudo : <?php echo $_SESSION['user']->getlogin(); ?></li>
+                  <li>Mon mail : <?php echo $_SESSION['user']->getmail() ?></li>
+              </ul>
+          </article>
+
     </section>
    
     <section class="bloc">
         <h3>Modifier mes informations</h3>
     
                 <form action="profil.php" method="POST">
+                    
                     <label>Identifiant : </label>
                     <input type="text" name="login" value="<?php echo $_SESSION['user']->getlogin(); ?>"><br>
                     <label>Mail :</label>
@@ -53,12 +58,18 @@ if($_SESSION['user']->isConnected() != true){
                     <input type="password" name="psw" minlength="5" /><br>
                     <label>Confirmation du mot de passe :</label>
                     <input type="password" name="pswconf" required><br>
+                    
                     <input type="submit" name="send">
-                    </form>
+                    
+                </form>
 
-    <?php // modif login/mail/mdp 
-   
-?>
+        <?php 
+        if(isset($_POST["send"]))
+        {
+            //add function qui delete trace laisser par utilisateur
+            $_SESSION["user"]->profil($_POST['login'],$_POST['mail'],$_POST['psw'],$_POST['pswconf']);
+        }
+        ?>
     </section>
      
     

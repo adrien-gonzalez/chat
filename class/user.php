@@ -77,7 +77,8 @@ public function connexion($login,$psw){
                     $this->surname= $result["surname"];
                     $this->mail= $result["mail"];
                     $this->rank= $result["rank"];
-                    return [$this->id,$this->login,$this->name,$this->surname,$this->mail,$this->rank];
+                    $this->pp= $result["pp"];
+                    return [$this->id,$this->login,$this->name,$this->surname,$this->mail,$this->rank,$this->pp];
                 }
                 else{
                     return false;
@@ -95,7 +96,7 @@ public function connexion($login,$psw){
 
 
 public function isConnected(){
-        if ($this->login != null) {
+        if ($this->id != null) {
             return true;
         } else {
             return false;
@@ -110,6 +111,7 @@ public function disconnect(){
         $this->surname = NULL;
         $this->mail = NULL;
         $this->rank = NULL;
+        $this->pp = NULL;
     }
 
 public function desinscription()
@@ -129,31 +131,49 @@ public function desinscription()
 public function mes_info()
 {   
     $this->connect();
-    $fetch=$this->execute("SELECT login,mail FROM user WHERE id = $this->id");
+    $fetch=$this->execute("SELECT * FROM user WHERE id = $this->id");
 
-    ?>
-        <table>
-            <tbody>
-                <tr>
-                    <th>Login</th>
-                    <th>Mail</th>
-                </tr>
-    <?php
-   foreach($fetch as list($login,$mail))
-   {
-    
-        ?>
-                <tr>
-                   <td><?php echo $login; ?></td> 
-                   <td><?php echo $mail; ?></td>
-                </tr>
-   <?php
-   }
-   ?>
-            </tbody> 
-        </table>
-    <?php
 }
+
+public function profil($confpsw,$login,$mail,$psw){
+    $this->connect();
+    $request= "SELECT password FROM user WHERE id = $this->id";
+    $query = mysqli_query($this->connexion,$request);
+    $fetchpsw = mysqli_fetch_assoc($query);
+        if(password_verify($confpsw,$fetchpsw["password"])){
+            if($login != NULL){
+                $result=$this->execute("SELECT login FROM user WHERE login = \"$login\"");
+                if(empty($result)){
+                    $this->login = $login;
+                }
+                else{
+                    return false;
+                }
+            }
+            if($mail != NULL){
+                $result=$this->execute("SELECT mail FROM user WHERE mail =\"$mail\"");
+                if(empty($result)){
+                    $this->mail = $mail;
+                }
+                else{
+                    return false;
+                }
+            }
+            if($psw != NULL)
+            {
+                $psw = password_hash($psw, PASSWORD_BCRYPT, array('cost' => 5));
+                $request = "UPDATE user SET password = \"$psw\" WHERE id = $this->id";
+                $query = mysqli_query($this->connexion,$request);
+            }
+            $request = "UPDATE user SET login = \"$this->login\", mail =\"$this->mail\" WHERE id =$this->id";
+            $query = mysqli_query($this->connexion,$request);
+        }
+        
+        else{
+            return false;
+        }
+    }
+
 
 
 
@@ -183,6 +203,10 @@ public function getmail(){
 
 public function getrank(){
     return $this->rank;
+}
+
+public function getpp(){
+    return $this->pp;
 }
 
 }
