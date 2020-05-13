@@ -1,8 +1,9 @@
-affichage_message()
+affichage_channel()
+setTimeout(affichage_message, 100);
 
 
-function affichage_message(){
-	
+function affichage_channel(){
+
 	$.ajax({
 		url : 'fonction_chat.php',
 		type: 'POST',
@@ -10,9 +11,54 @@ function affichage_message(){
 
 	    success:function(data)
 		{
+			var nbr_channel=0
+			for(i=0; i<Object.keys(data).length;i++)
+			{
+				if(data[i] =="{")
+				{
+					nbr_channel++;
+				}
+			}
+			for(i=0; i < nbr_channel; i++)
+		   	{
+			    var result = JSON.parse(data)[i];  
+				for(j=0;j <Object.keys(result).length; j++ )
+				{
+					var id =  Object.keys(result)[0];
+					var nom = Object.keys(result)[1];
+					if(j==0)
+					{
+						if($(".active").text().trim() == "")
+						{
+							$("#liste_channel").append('<li id="'+result[id]+'" class="channel active"></li>')
+						}
+						else
+						{
+							$("#liste_channel").append('<li id="'+result[id]+'" class="channel"></li>')
+						}
+							$("#"+result[id]).append('<div id="wrap_chan'+result[id]+'" class="wrap"></div>')	
+							$("#wrap_chan"+result[id]).append('<div id="meta_chan'+result[id]+'" class="meta"></div>')	
+							$("#meta_chan"+result[id]).append('<p id="name_chan'+result[id]+'" class="name">'+result[nom]+'</p>')	
+							$("#name_chan"+result[id]).after('<p class="preview"></p>')
+					}
+				}
+	   		}  
+		}
+	});
+}
+function affichage_message(){
+	
+	var channel = $(".active").attr('id')
 
-			console.log(data)
-			
+	$.ajax({
+		url : 'fonction_chat.php',
+		type: 'POST',
+		data: {channel: channel},
+
+	    success:function(data)
+		{
+
+			$(".sent").remove()
 			var nbr_messages=0
 			for(i=0; i<Object.keys(data).length;i++)
 			{
@@ -26,11 +72,11 @@ function affichage_message(){
 			    var result = JSON.parse(data)[i];  
 				for(j=0;j <Object.keys(result).length; j++  )
 				{
-
 					var id = Object.keys(result)[j-2];
 				   	var login = Object.keys(result)[j-1];
 				   	var message = Object.keys(result)[j];
 				   	var date = Object.keys(result)[j+1];
+				   	var id_chan = Object.keys(result)[j+2];
 
 				   	if(j == 2)
 				   	{
@@ -38,82 +84,115 @@ function affichage_message(){
 				   		{
 				   			$('<li class="sent">'+ result[login] +'<br><div><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
 							$('.message-input input').val(null);
-							$('.contact.active .preview').html('<span>Toi: </span>' + result[message]);
-							$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+							$('#'+result[id_chan]+' .preview').html('<span>Toi: </span>' + result[message]);
 				   		}
 				   		else
 				   		{
-						   	$('<li id="'+result[login]+'"  class="sent">'+ result[login] +'<br><div id="'+result[id]+'"><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
+
+						   	$('<li id="sent_'+result[id]+'"  class="sent">'+ result[login] +'<br><div id="'+result[id]+'"><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
 							$('.message-input input').val(null);
-							$('.contact.active .preview').html('<span>Toi: </span>' + result[message]);
-							$(".messages").animate({ scrollTop: $(document).height() }, "fast");
-							$("#"+result[login]).css({"display" : "flex", "flex-direction": "column", "align-items": "flex-end"})
+							$('.contact.active .preview').html('<span>'+result[login]+' : </span>' + result[message]);
+							$("#sent_"+result[id]).css({"display" : "flex", "flex-direction": "column", "align-items": "flex-end"})
 							$("#"+result[id]).css({"background-color" : "#F5F5F5", "color": "black"})
 						}
 					}
 				  	
 				}
 	   		}  
-
-
-
+				$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 		}
 	});
 }
 
 
-// $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+function insert_message(){
 
-// $("#profile-img").click(function() {
-// 	$("#status-options").toggleClass("active");
-// });
+	var id_channel = $(".active").attr('id')
 
-// $(".expand-button").click(function() {
-//   $("#profile").toggleClass("expanded");
-// 	$("#contacts").toggleClass("expanded");
-// });
+	$.ajax({
+		url : 'fonction_chat.php',
+		type: 'POST',
+		data: {message: message, id_channel: id_channel, date: date},
 
-// $("#status-options ul li").click(function() {
-// 	$("#profile-img").removeClass();
-// 	$("#status-online").removeClass("active");
-// 	$("#status-away").removeClass("active");
-// 	$("#status-busy").removeClass("active");
-// 	$("#status-offline").removeClass("active");
-// 	$(this).addClass("active");
-	
-// 	if($("#status-online").hasClass("active")) {
-// 		$("#profile-img").addClass("online");
-// 	} else if ($("#status-away").hasClass("active")) {
-// 		$("#profile-img").addClass("away");
-// 	} else if ($("#status-busy").hasClass("active")) {
-// 		$("#profile-img").addClass("busy");
-// 	} else if ($("#status-offline").hasClass("active")) {
-// 		$("#profile-img").addClass("offline");
-// 	} else {
-// 		$("#profile-img").removeClass();
-// 	};
-	
-// 	$("#status-options").removeClass("active");
-// });
+	    success:function(data){
+		}
+	});
+}
+
 
 function newMessage() {
+	
 	message = $(".message-input input").val();
+	login = $("#name_user").text()
+
+	var now = new Date();
+	var annee   = now.getFullYear();
+	var mois    = now.getMonth() + 1;
+	var jour    = now.getDate();
+	var heure   = now.getHours();
+	var minute  = now.getMinutes();
+	var seconde = now.getSeconds();
+	
+	if(mois < 10)
+	{
+		mois = "0"+mois
+	}
+	if(jour < 10)
+	{
+		jour = "0"+jour
+	}
+	if(heure < 10)
+	{
+		heure = "0"+heure
+	}
+	if(minute < 10)
+	{
+		minute = "0"+minute
+	}
+	if(seconde < 10)
+	{
+		seconde = "0"+seconde 
+	}
+	date = annee+"-"+mois+"-"+jour+" "+heure+":"+minute+":"+seconde
 	if($.trim(message) == '') {
 		return false;
 	}
-	$('<li class="sent">tf<br><div><p>' + message + '</p><p id="heure">heure</p></div></li>').appendTo($('.messages ul'));
+	$('<li class="sent">'+login+'<br><div><p>' + message + '</p><p id="heure">'+date+'</p></div></li>').appendTo($('.messages ul'));
 	$('.message-input input').val(null);
-	$('.contact.active .preview').html('<span>You: </span>' + message);
-	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+	$('.channel.active .preview').html('<span>Toi: </span>' + message);
+
+	var top = $(".messages").scrollTop() + $('.sent:last').height()*2
+	$(".messages").animate({ scrollTop: top }, "slow");
+
 };
 
 $('.submit').click(function() {
-  newMessage();
+
+	if($(".message-input input").val() != ""){
+
+  		newMessage();
+  		insert_message()
+	}
 });
 
 $(window).on('keydown', function(e) {
   if (e.which == 13) {
     newMessage();
+  	insert_message()
     return false;
   }
+});
+
+
+
+$( document ).ready(function() {
+
+	$("body").on("click", ".channel", function () {
+
+		var id_chan=$(this).attr('id')
+		$(".channel").removeClass("active")
+		$("#"+id_chan).addClass("active")
+		affichage_message()
+
+	});
 });

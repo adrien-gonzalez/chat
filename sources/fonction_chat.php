@@ -3,24 +3,56 @@
 session_start();
 include("../include/config.php");
 
-// REQUETE ID UTILISATEUR
-$login = $_SESSION['login'];
-$req_id= "SELECT id FROM user WHERE login='$login'";
-$execute_req_id = mysqli_query($base, $req_id);
-$resultat_req_id = mysqli_fetch_array($execute_req_id);
-$id = $resultat_req_id['id'];
 
-// REQUETE MESSAGE
-$req_message = "SELECT message.id, login, message, date_hour FROM message, user WHERE id_chan = 1 and user.id = id_user";
-$execute_req_message = mysqli_query($base, $req_message);
-$ifexist=mysqli_num_rows($execute_req_message);
-
-if($ifexist != 0)
+if(isset($_POST['message']) && isset($_POST['id_channel']) && isset($_POST['date']))
 {
-	while($row = mysqli_fetch_assoc($execute_req_message)){
-	    $json[] = $row;
-	}
-	echo json_encode($json);
+	// REQUETE ID UTILISATEUR
+	$message = $_POST['message'];
+	$id_channel = $_POST['id_channel'];
+	$login = $_SESSION['login'];
+	$date = $_POST['date'];
+	
+	$req_id= "SELECT id FROM user WHERE login='$login'";
+	$execute_req_id = mysqli_query($base, $req_id);
+	$resultat_req_id = mysqli_fetch_array($execute_req_id);
+	$id = $resultat_req_id['id'];
+	
+
+	$insert_message = "INSERT INTO message VALUES (NULL, '$id', '$id_channel', '$message', '$date')";
+	mysqli_query($base, $insert_message);
+
+}
+else if(isset($_POST['channel']))
+{
+	// REQUETE MESSAGE
+	$channel = $_POST['channel'];
+	$req_message = "SELECT message.id, login, message, date_hour, id_chan FROM  message, user WHERE id_chan = '$channel' and user.id = id_user ORDER BY message.id ASC";
+	$execute_req_message = mysqli_query($base, $req_message);
+	$ifexist=mysqli_num_rows($execute_req_message);
+
+	if($ifexist != 0)
+	{
+		while($row = mysqli_fetch_assoc($execute_req_message)){
+		    $json[] = $row;
+		}
+		echo json_encode($json);
+	}	
+}
+else
+{
+	$req_channel = "SELECT * FROM chan";
+	$execute_req_channel = mysqli_query($base, $req_channel);
+	$ifexist=mysqli_num_rows($execute_req_channel);
+
+	if($ifexist != 0)
+	{
+		while($row = mysqli_fetch_assoc($execute_req_channel)){
+		    $json[] = $row;
+		}
+		echo json_encode($json);
+	}	
 }
 
 ?>
+
+

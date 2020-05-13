@@ -1,15 +1,13 @@
 <?php session_start();
 
-
+$_SESSION['login']="Walken99";
 if(!isset($_SESSION['login']))
 {
   header('Location: ../');
 }
 ?>
 
-
-
-
+<!-- SELECT chan.id, name, message FROM message, chan WHERE id_chan = chan.id GROUP by id_chan -->
 <!DOCTYPE html><html class=''>
 <head>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -31,17 +29,9 @@ if(!isset($_SESSION['login']))
 				<p id="name_user"><?php echo $_SESSION['login'];?></p>
 			</div>
 		</div>
-		<div id="contacts">
+		<div id="channels">
 		<!-- AFFICHAGE DES CANAUX DE DISCUSSION -->
-      <ul>	
-				<li class="contact active">
-					<div class="wrap">
-						<div class="meta">
-							<p class="name">Général</p>
-							<p class="preview"></p>
-						</div>
-					</div>
-				</li>
+      <ul id="liste_channel">	
 			</ul>
     <!-- AFFICHAGE DES CANAUX DE DISCUSSION -->
 		</div>
