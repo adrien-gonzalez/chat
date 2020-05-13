@@ -1,4 +1,3 @@
-
 <?php
 
 class user extends bdd{
@@ -9,6 +8,7 @@ class user extends bdd{
     private $surname = NULL;
     private $mail = NULL;
     private $rank = NULL;
+    private $pp = NULL;
     private $message = NULL;
     
     
@@ -29,18 +29,19 @@ class user extends bdd{
                 if(empty($result)){
                     $this->connect();
                     $psw = password_hash($psw, PASSWORD_BCRYPT, array('cost' => 5));
-                    $requete = "INSERT INTO `user`(`login`,`name`, `surname`, `mail`,`password`,`rank`) VALUES ('$login','$name','$surname','$mail','$psw','membre') ";
+                    $requete = "INSERT INTO `user`(`login`,`name`, `surname`, `mail`,`password`,`rank`) VALUES ('$login','$name','$surname','$mail','$psw','membre')";
                     $query = mysqli_query($this->connexion,$requete);
                     echo "ok";
                     
-                    
-                    /*if ($result) {
+                    /*
+                    if ($query) {
                         echo "New record created successfully";
                     } else {
                         echo "Error: " .   "<br>" .  mysqli_error($connect);
-                    */ 
+                     
+                    }
                 }
-                
+            */}
                 else{
                     echo "log"; 
                 }
@@ -61,6 +62,7 @@ class user extends bdd{
 
 
 
+
 public function connexion($login,$psw){
         $this->connect();
         $request = "SELECT * FROM user WHERE login = '$login'";
@@ -71,7 +73,11 @@ public function connexion($login,$psw){
                 if(password_verify($psw,$result["password"])){
                     $this->id = $result["id"];
                     $this->login = $result["login"];
-                    return [$this->id,$this->login];
+                    $this->name= $result["name"];
+                    $this->surname= $result["surname"];
+                    $this->mail= $result["mail"];
+                    $this->rank= $result["rank"];
+                    return [$this->id,$this->login,$this->name,$this->surname,$this->mail,$this->rank];
                 }
                 else{
                     return false;
@@ -89,7 +95,7 @@ public function connexion($login,$psw){
 
 
 public function isConnected(){
-        if ($this->id != null) {
+        if ($this->login != null) {
             return true;
         } else {
             return false;
@@ -97,24 +103,20 @@ public function isConnected(){
     }
 
 
-
-public function disconnect()
-    {
+public function disconnect(){
         $this->id = NULL;
         $this->login = NULL;
         $this->name = NULL;
         $this->surname = NULL;
         $this->mail = NULL;
         $this->rank = NULL;
-
     }
-
 
 public function desinscription()
     {
         $this->connect();
         $id = $_SESSION["user"]->getid();
-        $delete="DELETE FROM utilisateurs WHERE id = $id";
+        $delete="DELETE * FROM user WHERE id = $id";
         $query=mysqli_query($this->connexion,$delete);
                 session_unset();
                 session_destroy();
@@ -122,9 +124,43 @@ public function desinscription()
     }
 
 //----------------------------------------------------------------------------------//
+//Function du profil 
+
+public function mes_info()
+{   
+    $this->connect();
+    $fetch=$this->execute("SELECT login,mail FROM user WHERE id = $this->id");
+
+    ?>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Login</th>
+                    <th>Mail</th>
+                </tr>
+    <?php
+   foreach($fetch as list($login,$mail))
+   {
+    
+        ?>
+                <tr>
+                   <td><?php echo $login; ?></td> 
+                   <td><?php echo $mail; ?></td>
+                </tr>
+   <?php
+   }
+   ?>
+            </tbody> 
+        </table>
+    <?php
+}
 
 
 
+
+
+//----------------------------------------------------------------------------------//
+//Get
 public function getid(){
     return $this->id;
 }

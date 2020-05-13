@@ -1,5 +1,3 @@
-<html>
-
 <?php
 require 'class/bdd.php';
 require 'class/user.php';
@@ -18,17 +16,19 @@ if($_SESSION['user']->isConnected() != false){
 }
 
 ?>
-
-
+<!DOCTYPE html>
+<html>
 <head>
         <title>Inscription</title> 
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
         <meta charset="UTF-8">
 </head>
-
-<body>
+<header>
 <?php require 'include/nav.php'?>
+</header>
+<body>
+
 
 <main>
     <section class="panneau">

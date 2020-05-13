@@ -1,5 +1,3 @@
-<html>
-
 <?php
 require 'class/bdd.php';
 require 'class/user.php';
@@ -16,7 +14,8 @@ if(!isset($_SESSION['user'])){
 
 
 ?>
-
+<!DOCTYPE html>
+<html>
 <head>
         <title>Accueil</title> 
         <link rel="stylesheet" href="style.css">
@@ -24,15 +23,14 @@ if(!isset($_SESSION['user'])){
         <meta charset="UTF-8">
 </head>
 
-
+<header>
+<?php require 'include/nav.php'?>
+</header>
 
 <body>
-<?php require 'include/nav.php'?>
+
 
 <main>
-
-
-
 
 </main>
 <?php require 'include/footer.php'?>

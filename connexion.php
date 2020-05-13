@@ -1,5 +1,3 @@
-<html>
-
 <?php 
 require 'class/bdd.php';
 require 'class/user.php';
@@ -17,8 +15,8 @@ if($_SESSION['user']->isConnected() != false){
     header('Location:index.php');
 }
 ?>
-
-
+<!DOCTYPE html>
+<html>
 <head>
         <title>Connexion</title> 
         <link rel="stylesheet" href="style.css">
@@ -27,8 +25,11 @@ if($_SESSION['user']->isConnected() != false){
 
 </head>
 
-<body>
+<header>
 <?php require 'include/nav.php'?>
+</header>
+<body>
+
 
 <main>
 
