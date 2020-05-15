@@ -22,6 +22,7 @@ if($_SESSION['user']->isConnected() != false){
         <title>Inscription</title> 
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+        <script type="text/javascript" src="js/script.js"></script>
         <meta charset="UTF-8">
 </head>
 <header>
@@ -35,28 +36,49 @@ if($_SESSION['user']->isConnected() != false){
     <h1>Inscription</h1>
 
         <section class="bloc"> 
-        <form class="formulaire" action="inscription.php" method="post">
+        <form name="inscription" action="inscription.php" method="post">
         
-            <label>Identifiant :</label>
-            <input type="text" name="login" required><br>
-            <label>Prénom :</label>
-            <input type="text" name="name" required><br>
-            <label>Nom :</label>
-            <input type="text" name="surname" required><br>
-            <label>Mail :</label>
-            <input type="mail" name="mail" required><br>
-            <label>Mot de passe :</label>
-            <input type="password" name="psw" minlength="5" required><br>
-            <label>Confirmation du mot de passe :</label>
-            <input type="password" name="pswconf" minlength="5" required><br>
-            <input type="submit" name="send">
+            <label for="login">Identifiant :</label>
+            <input type="text" name="login" id="login">
+            <!-- à faire pop en js-->
+            <span id="login_empty"></span>
+</br>
+            <label for="firstName">Prénom :</label>
+            <input type="text" name="name" id="name" >
+            <!-- à faire pop en js-->
+            <span id="title"></span>
+</br>
+            <label for="surname">Nom :</label>
+            <input type="text" name="surname" id="surname" >
+             <!-- à faire pop en js-->
+             <span id="surname_empty"></span>
+            <br>
+            <label for="mail">Mail :</label>
+            <input type="mail" name="mail" id="mail" >
+             <!-- à faire pop en js-->
+             <span id="mail_empty"></span>
+            <br>
+            <label for="psw">Mot de passe :</label>
+            <input type="password" name="psw" id="psw"  minlength="5">
+             <!-- à faire pop en js-->
+             <span id="psw_empty"></span>
+            <br>
+            <label for="pswconf">Confirmation du mot de passe :</label>
+            <input type="password" name="pswconf" id="pswconf"  minlength="5" >
+             <!-- à faire pop en js-->
+             <span id="pswconf_empty"></span>
+            <br>
+            
+            
+            <input TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
+            <input type="submit" name="submit" id="submit"  value="Envoyer"></button>
         </form>
-
+<p id="erreur"></p>
     </section>
 
 <?php
 
-if(isset($_POST['send'])){
+if(isset($_POST['submit'])){
     
 $_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],$_POST['mail'],$_POST['psw'],$_POST['pswconf']);
     

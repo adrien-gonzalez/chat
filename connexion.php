@@ -39,19 +39,20 @@ if($_SESSION['user']->isConnected() != false){
 
         <section class="bloc">
    
-        <form class="formulaire" action="connexion.php" method="post">
+        <form name="connexion" action="connexion.php" method="post">
         
             <label>Identifiant : </label>
             <input type="text" name="login" required><br>
             <label>Mot de passe :</label>
-            <input type="password" name="psw" required><br>
+            <input type="password" name="psw"  minlength="5" required ><br>
 
-            <input type="submit" name="send">
+            <input TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
+            <input type="submit" name="submit" id="submit"  value="Envoyer"></button>
         </form>
-
+        <p id="erreur"></p>
 </section>
 <?php
-if(isset($_POST["send"])){
+if(isset($_POST["submit"])){
     if($_SESSION["user"]->connexion($_POST["login"],$_POST["psw"]) == false){
         ?>
             <p>Un problème est survenue lors de la connexion veuillez vérifer vos informations de connexion</p>
@@ -60,7 +61,7 @@ if(isset($_POST["send"])){
     else{
         $_SESSION["user"]->connexion($_POST["login"],$_POST["psw"]);
         $_SESSION["login"] = true;
-        if($_SESSION['user']->getrole() == "admin"){
+        if($_SESSION['user']->getrank() == "admin"){
             $_SESSION["perm"] = true;
         }
         header('location:index.php');

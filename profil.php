@@ -48,7 +48,7 @@ if($_SESSION['user']->isConnected() != true){
     <section class="bloc">
         <h3>Modifier mes informations</h3>
     
-                <form action="profil.php" method="POST">
+                <form action="profil.php" method="POST" name="profil">
                     
                     <label>Identifiant : </label>
                     <input type="text" name="login" value="<?php echo $_SESSION['user']->getlogin(); ?>"><br>
@@ -59,12 +59,14 @@ if($_SESSION['user']->isConnected() != true){
                     <label>Confirmation du mot de passe :</label>
                     <input type="password" name="pswconf" required><br>
                     
-                    <input type="submit" name="send">
+                    <input TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
+                    <input type="submit" name="submit" id="submit"  value="Envoyer"></button>
                     
                 </form>
+                <p id="erreur"></p>
 
         <?php 
-        if(isset($_POST["send"]))
+        if(isset($_POST["submit"]))
         {
             //add function qui delete trace laisser par utilisateur
             $_SESSION["user"]->profil($_POST['login'],$_POST['mail'],$_POST['psw'],$_POST['pswconf']);
