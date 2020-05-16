@@ -68,7 +68,6 @@ function affichage_channel(){
 function affichage_message(){
 	
 	var channel = $(".active").attr('id')
-
 	$.ajax({
 		url : 'fonction_chat.php',
 		type: 'POST',
@@ -101,8 +100,9 @@ function affichage_message(){
 				   	{
 				   		if(result[login] == $("#name_user").text())
 				   		{
-				   			$('<li id="'+result[id]+'" class="sent">'+ result[login] +'<br><div class="contenue"><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
+				   			$('<li id="'+result[id]+'" class="sent">'+ result[login] +'<br><div id="contenue_'+result[id]+'" class="contenue"><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
 							$('.message-input input').val(null);
+							$("#preview_"+result[id_chan]).html('<span>Toi : </span>' + result[message]);
 				   		}
 				   		else
 				   		{
@@ -112,6 +112,7 @@ function affichage_message(){
 							$("#sent_"+result[id]).css({"display" : "flex", "flex-direction": "column", "align-items": "flex-end"})
 							$("#"+result[id]).css({"background-color" : "#F5F5F5", "color": "black"})
 						}
+
 					}
 				  	
 				}
@@ -125,23 +126,8 @@ function affichage_message(){
 function insert_message(){
 
 	var id_channel = $(".active").attr('id')
-
-	$.ajax({
-		url : 'fonction_chat.php',
-		type: 'POST',
-		data: {message: message, id_channel: id_channel, date: date},
-
-	    success:function(data){
-		}
-	});
-}
-
-
-function newMessage() {
+	var message = $(".message-input input").val();
 	
-	message = $(".message-input input").val();
-	login = $("#name_user").text()
-
 	var now = new Date();
 	var annee   = now.getFullYear();
 	var mois    = now.getMonth() + 1;
@@ -171,31 +157,43 @@ function newMessage() {
 		seconde = "0"+seconde 
 	}
 	date = annee+"-"+mois+"-"+jour+" "+heure+":"+minute+":"+seconde
-	if($.trim(message) == '') {
-		return false;
-	}
-	$('<li class="sent">'+login+'<br><div><p>' + message + '</p><p id="heure">'+date+'</p></div></li>').appendTo($('.messages ul'));
-	$('.message-input input').val(null);
-	$('.channel.active .preview').html('<span>Toi: </span>' + message);
 
-	var top = $(".messages").scrollTop() + $('.sent:last').height()*2
-	$(".messages").animate({ scrollTop: top }, "slow");
+	$.ajax({
+		url : 'fonction_chat.php',
+		type: 'POST',
+		data: {message: message, id_channel: id_channel, date: date},
 
-};
+	    success:function(data){
+		}
+	});
+}
+
+function delete_message(){
+
+	$.ajax({
+		url : 'fonction_chat.php',
+		type: 'POST',
+		data: {id_svg: id_svg},
+
+	    success:function(data){
+		}
+	});
+}
+
 
 $('.submit').click(function() {
 
 	if($(".message-input input").val() != ""){
 
-  		newMessage();
   		insert_message()
+  		affichage_message()
 	}
 });
 
 $(window).on('keydown', function(e) {
   if (e.which == 13) {
-    newMessage();
   	insert_message()
+  	affichage_message()
     return false;
   }
 });
@@ -215,21 +213,22 @@ $( document ).ready(function() {
 
 	});
 
-	// $("body").on("mouseenter", ".sent", function () {
+	$("body").on("mouseenter", ".contenue", function () {
 
-		
+		$("svg").remove()
+		var id_message= $(this).attr('id')
+		$("#"+id_message).after('<svg id="svg_'+id_message+'" class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/></svg>')
 
-	// 	var id_message= $(this).attr('id')
-	// 	$("#delete_"+id_message).remove()
-	// 	$("#"+id_message+">div").append('<div class="delete" id="delete_'+id_message+'">ok</div>').hide().fadeIn(100);
 
-	// });
+	});
 
-	// $("body").on("mouseout", ".sent", function () {
+	$("body").on("click", "svg", function () {
 
-	// 	// var id_message= $(this).attr('id')
-	// 	// $("#delete_"+id_message).remove()
-	// 	console.log("ok")
-	// 	$(".delete").fadeOut()
-	// });
+		id= $(this).attr('id')
+		id_svg=id.substr(13)
+		$("#"+id_svg).remove()
+		delete_message()
+		setTimeout(affichage_message, 100);
+	});
 });
+

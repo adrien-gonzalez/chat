@@ -38,6 +38,14 @@ else if(isset($_POST['channel']))
 		echo json_encode($json);
 	}	
 }
+else if(isset($_POST['id_svg']))
+{
+	$id_svg = $_POST['id_svg'];
+	$delete_message = "DELETE FROM message WHERE id = '$id_svg'";
+	mysqli_query($base, $delete_message);
+
+
+}
 else
 {
 	$req_channel = "SELECT * FROM chan";

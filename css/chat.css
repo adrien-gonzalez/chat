@@ -475,3 +475,14 @@
 #frame .content .message-input .wrap button:focus {
   outline: none;
 }
+
+.sent svg{
+ 
+  margin-left: 20px;
+}
+
+.sent svg:hover{
+ 
+  cursor: pointer;
+}
+
