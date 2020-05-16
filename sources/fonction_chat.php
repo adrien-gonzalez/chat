@@ -26,7 +26,7 @@ else if(isset($_POST['channel']))
 {
 	// REQUETE MESSAGE
 	$channel = $_POST['channel'];
-	$req_message = "SELECT message.id, login, message, date_hour, id_chan FROM  message, user WHERE id_chan = '$channel' and user.id = id_user ORDER BY message.id ASC";
+	$req_message = "SELECT message.id, login, message, date_hour, id_chan FROM message, user WHERE id_chan = '$channel' and user.id = id_user ORDER BY message.id ASC";
 	$execute_req_message = mysqli_query($base, $req_message);
 	$ifexist=mysqli_num_rows($execute_req_message);
 
@@ -46,11 +46,26 @@ else
 
 	if($ifexist != 0)
 	{
+
+
 		while($row = mysqli_fetch_assoc($execute_req_channel)){
 		    $json[] = $row;
 		}
+
+		$req_last_message = "SELECT chan.id, message, login FROM message, chan, user WHERE id_chan = chan.id and id_user = user.id GROUP by id_chan, date_hour ORDER BY date_hour ASC";
+		$execute_req_last_message = mysqli_query($base, $req_last_message);
+		$ifexist2=mysqli_num_rows($execute_req_last_message);
+
+
+
+		if($ifexist2 != 0)
+		{	
+			while($row2 = mysqli_fetch_assoc($execute_req_last_message)){
+			    $json[] = $row2;
+			}
+		}
 		echo json_encode($json);
-	}	
+	}
 }
 
 ?>

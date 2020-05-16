@@ -7,7 +7,6 @@ if(!isset($_SESSION['login']))
 }
 ?>
 
-<!-- SELECT chan.id, name, message FROM message, chan WHERE id_chan = chan.id GROUP by id_chan -->
 <!DOCTYPE html><html class=''>
 <head>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -38,7 +37,7 @@ if(!isset($_SESSION['login']))
 	</div>
 	<div class="content">
 		<div class="nom_canal">
-			<p>Général</p>
+			<p id="nom_canal"></p>
 		</div>
 		<div class="messages">
 			<ul>

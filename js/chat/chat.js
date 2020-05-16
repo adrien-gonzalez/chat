@@ -26,20 +26,39 @@ function affichage_channel(){
 				{
 					var id =  Object.keys(result)[0];
 					var nom = Object.keys(result)[1];
-					if(j==0)
+
+					if(nom != "message")
 					{
-						if($(".active").text().trim() == "")
+						if(j==0)
 						{
-							$("#liste_channel").append('<li id="'+result[id]+'" class="channel active"></li>')
+							if($(".active").text().trim() == "")
+							{
+								$("#liste_channel").append('<li id="'+result[id]+'" class="channel active"></li>')
+								$("#nom_canal").text(result[nom])
+							}
+							else
+							{
+								$("#liste_channel").append('<li id="'+result[id]+'" class="channel"></li>')
+							}
+								$("#"+result[id]).append('<div id="wrap_chan'+result[id]+'" class="wrap"></div>')	
+								$("#wrap_chan"+result[id]).append('<div id="meta_chan'+result[id]+'" class="meta"></div>')	
+								$("#meta_chan"+result[id]).append('<p id="name_chan'+result[id]+'" class="name">'+result[nom]+'</p>')	
+								$("#name_chan"+result[id]).after('<p id="preview_'+result[id]+'" class="preview"></p>')
+						}
+					}
+					else
+					{
+						var message = Object.keys(result)[1];
+						var login = Object.keys(result)[2];
+
+						if($("#name_user").text() == result[login])
+						{
+							$("#preview_"+result[id]).html('<span>Toi: </span>' + result[message]);
 						}
 						else
-						{
-							$("#liste_channel").append('<li id="'+result[id]+'" class="channel"></li>')
+						{	
+							$("#preview_"+result[id]).html('<span>'+result[login]+': </span>' + result[message]);
 						}
-							$("#"+result[id]).append('<div id="wrap_chan'+result[id]+'" class="wrap"></div>')	
-							$("#wrap_chan"+result[id]).append('<div id="meta_chan'+result[id]+'" class="meta"></div>')	
-							$("#meta_chan"+result[id]).append('<p id="name_chan'+result[id]+'" class="name">'+result[nom]+'</p>')	
-							$("#name_chan"+result[id]).after('<p class="preview"></p>')
 					}
 				}
 	   		}  
@@ -82,16 +101,14 @@ function affichage_message(){
 				   	{
 				   		if(result[login] == $("#name_user").text())
 				   		{
-				   			$('<li class="sent">'+ result[login] +'<br><div><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
+				   			$('<li id="'+result[id]+'" class="sent">'+ result[login] +'<br><div class="contenue"><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
 							$('.message-input input').val(null);
-							$('#'+result[id_chan]+' .preview').html('<span>Toi: </span>' + result[message]);
 				   		}
 				   		else
 				   		{
 
 						   	$('<li id="sent_'+result[id]+'"  class="sent">'+ result[login] +'<br><div id="'+result[id]+'"><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
 							$('.message-input input').val(null);
-							$('.contact.active .preview').html('<span>'+result[login]+' : </span>' + result[message]);
 							$("#sent_"+result[id]).css({"display" : "flex", "flex-direction": "column", "align-items": "flex-end"})
 							$("#"+result[id]).css({"background-color" : "#F5F5F5", "color": "black"})
 						}
@@ -190,9 +207,29 @@ $( document ).ready(function() {
 	$("body").on("click", ".channel", function () {
 
 		var id_chan=$(this).attr('id')
+		var nom_canal = $("#name_chan"+id_chan).text()
+		$("#nom_canal").text(nom_canal)
 		$(".channel").removeClass("active")
 		$("#"+id_chan).addClass("active")
 		affichage_message()
 
 	});
+
+	// $("body").on("mouseenter", ".sent", function () {
+
+		
+
+	// 	var id_message= $(this).attr('id')
+	// 	$("#delete_"+id_message).remove()
+	// 	$("#"+id_message+">div").append('<div class="delete" id="delete_'+id_message+'">ok</div>').hide().fadeIn(100);
+
+	// });
+
+	// $("body").on("mouseout", ".sent", function () {
+
+	// 	// var id_message= $(this).attr('id')
+	// 	// $("#delete_"+id_message).remove()
+	// 	console.log("ok")
+	// 	$(".delete").fadeOut()
+	// });
 });
