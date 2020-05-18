@@ -46,8 +46,8 @@ if(!isset($_SESSION['admin'])){
 
     <main>
     
-    <section class="panneau">
-    <h1>Administration</h1>
+    <section class="container">
+    <h1 class="center">Administration</h1>
 
         <div class="gestion_user"> 
            
@@ -58,8 +58,19 @@ if(!isset($_SESSION['admin'])){
                 </article>
     </section>
 
-</section>
+
         </div>
+        <div class="gestion_admin"> 
+           
+    
+           <section class="bloc">
+                       <article>
+                       <?php $_SESSION["admin"]->tableau_admin(); ?>
+                       </article>
+           </section>
+       
+       
+               </div>
 
      </section>
 
@@ -69,6 +80,7 @@ if(!isset($_SESSION['admin'])){
       
 
     </body>
+    <script src="script.js"></script>
     <footer>
 <?php require 'include/footer.php'?>
 </footer>

@@ -52,7 +52,7 @@ if($_SESSION['user']->isConnected() != false){
             <input type="password" name="psw"  minlength="5" required ><br>
 
             <input  class="btn btn-lg btn-success" TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
-            <input  class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer"></button>
+            <input  class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer">
         </form>
         <p id="erreur"></p>
 
