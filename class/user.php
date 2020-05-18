@@ -31,7 +31,7 @@ class user extends bdd{
                     $psw = password_hash($psw, PASSWORD_BCRYPT, array('cost' => 5));
                     $requete = "INSERT INTO `user`(`login`,`name`, `surname`, `mail`,`password`,`rank`) VALUES ('$login','$name','$surname','$mail','$psw','membre')";
                     $query = mysqli_query($this->connexion,$requete);
-                    echo "ok";
+                    return "ok";
                     
                     /*
                     if ($query) {
@@ -43,19 +43,19 @@ class user extends bdd{
                 }
             */}
                 else{
-                    echo "log"; 
+                    return "log"; 
                 }
             }
             else{ 
-                echo "mail";
+                return "mail";
             }
         }
             else{
-                echo "psw";
+                return "psw";
             }
         }
         else{
-            echo "empty";
+            return "empty";
         }
     }
 
