@@ -14,7 +14,7 @@ if (isset($_SESSION['login']))
                 <li><a href="sources/chat.php">Chat</a></li>
                 
                 <?php 
-                if(isset($_SESSION['perm'])){
+                if(isset($_SESSION['admin'])){
                 ?>
                 <li><a href="admin.php">Admin</a>
                     <?php
