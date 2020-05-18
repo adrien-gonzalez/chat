@@ -20,7 +20,7 @@ if($_SESSION['user']->isConnected() != false){
 <html>
 <head>
         <title>Inscription</title> 
-        <link rel="stylesheet" href="style.css">
+        
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -28,6 +28,7 @@ if($_SESSION['user']->isConnected() != false){
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script type="text/javascript" src="js/inscription.js"></script>
+        <link rel="stylesheet" href="css/style.css">
 </head>
 <header>
 <?php require 'include/nav.php'?>
@@ -36,7 +37,7 @@ if($_SESSION['user']->isConnected() != false){
 
 
 <main>
-    <section class="panneau">
+    <section class="container center">
     <h1>Inscription</h1>
 
         <section class="bloc"> 
@@ -58,7 +59,7 @@ if($_SESSION['user']->isConnected() != false){
              <span id="surname_empty"></span>
             <br>
             <label for="mail">Mail :</label>
-            <input type="mail" name="mail" id="mail" >
+            <input type="mail" name="mail" id="mail"  class="validate">
              <!-- à faire pop en js-->
              <span id="mail_empty"></span>
             <br>
@@ -74,8 +75,8 @@ if($_SESSION['user']->isConnected() != false){
             <br>
             
             
-            <input TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
-            <input type="submit" name="submit" id="submit"  value="Envoyer"></button>
+            <input  class="btn btn-lg btn-success"TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
+            <input class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer"></button>
         </form>
 <p id="erreur"></p>
     </section>
@@ -85,7 +86,7 @@ if($_SESSION['user']->isConnected() != false){
 if(isset($_POST['submit'])){
     
 $_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],$_POST['mail'],$_POST['psw'],$_POST['pswconf']);
-    
+header ('location:connexion.php');
 }
 
 ?>
@@ -93,9 +94,12 @@ $_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],
 
 
 </main>
-<?php require 'include/footer.php'?>
+
 
 
 </body>
+<footer>
+<?php require 'include/footer.php'?>
+</footer>
 
 </html>

@@ -19,7 +19,7 @@ if($_SESSION['user']->isConnected() != false){
 <html>
 <head>
         <title>Connexion</title> 
-        <link rel="stylesheet" href="style.css">
+        
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -27,6 +27,8 @@ if($_SESSION['user']->isConnected() != false){
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script type="text/javascript" src="js/connexion.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        
 
 </head>
 
@@ -39,23 +41,21 @@ if($_SESSION['user']->isConnected() != false){
 <main>
 
 
-<section class="panneau">
-<h1> Connexion </h1>
+<section class="container center">
 
-        <section class="bloc">
-   
-        <form name="connexion" action="connexion.php" method="post">
+<h1> Connexion </h1>
+        <form name="connexion" action="sources/chat.php" method="post">
         
             <label>Identifiant : </label>
             <input type="text" name="login" required><br>
             <label>Mot de passe :</label>
             <input type="password" name="psw"  minlength="5" required ><br>
 
-            <input TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
-            <input type="submit" name="submit" id="submit"  value="Envoyer"></button>
+            <input  class="btn btn-lg btn-success" TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
+            <input  class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer"></button>
         </form>
         <p id="erreur"></p>
-</section>
+
 <?php
 if(isset($_POST["submit"])){
     if($_SESSION["user"]->connexion($_POST["login"],$_POST["psw"]) == false){
@@ -75,12 +75,16 @@ if(isset($_POST["submit"])){
 }
 
 ?>
+</div>
 </section>
 
 
-</main>
-<?php require 'include/footer.php'?>
 
+</main>
+
+<footer>
+<?php require 'include/footer.php'?>
+</footer>
 
 </body>
 

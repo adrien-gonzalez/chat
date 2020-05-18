@@ -18,7 +18,7 @@ if($_SESSION['user']->isConnected() != true){
 
 <head>
         <title>Profil</title> 
-        <link rel="stylesheet" href="style.css">
+        
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -26,6 +26,8 @@ if($_SESSION['user']->isConnected() != true){
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script type="text/javascript" src="js/profil.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        
 </head>
 <header>
 <?php require 'include/nav.php'?>
@@ -36,7 +38,7 @@ if($_SESSION['user']->isConnected() != true){
 <main>
 
 
-<section class="panneau">
+<section class="container center">
 <h1> Mon compte </h1>
 
     <section class="bloc">
@@ -64,8 +66,8 @@ if($_SESSION['user']->isConnected() != true){
                     <label>Confirmation du mot de passe :</label>
                     <input type="password" name="pswconf" required><br>
                     
-                    <input TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
-                    <input type="submit" name="submit" id="submit"  value="Envoyer"></button>
+                    <input class="btn btn-lg btn-success" TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
+                    <input class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer"></button>
                     
                 </form>
                 <p id="erreur"></p>
@@ -94,7 +96,7 @@ if($_SESSION['user']->isConnected() != true){
     <section class="bloc">
         <h3>Me désinscrire</h3> 
         <form class="formulaire" method="post">
-            <button type="submit" name="desinscription">Se désinscrire</button>
+            <button  class="btn btn-lg btn-success" type="submit" name="desinscription">Se désinscrire</button>
         </form>
 
         <?php 
@@ -111,8 +113,10 @@ if($_SESSION['user']->isConnected() != true){
 
 </main>
 
-<?php require 'include/footer.php'?>
+
 
 </body>
-
+<footer>
+<?php require 'include/footer.php'?>
+</footer>
 </html>

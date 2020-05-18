@@ -46,6 +46,7 @@ else if(isset($_POST['id_svg']))
 
 
 }
+
 else if (isset($_POST['nom_channel'])){
 	
 	$nom_channel = $_POST['nom_channel'];
