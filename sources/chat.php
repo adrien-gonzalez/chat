@@ -3,6 +3,11 @@
 require '../class/bdd.php';
 require '../class/user.php';
 
+// MEMBRE OU ADMIN
+$test = new user();
+$log=$test->connexion($_SESSION['login'],$_SESSION['psw']);
+
+
 if(!isset($_SESSION['login']))
 {
   header('Location: ../');
@@ -15,17 +20,17 @@ if(!isset($_SESSION['login']))
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <!------ Include the above in your HEAD tag ---------->
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link href="../css/chat.css" rel="stylesheet">
 
 </head>
 
-<body class="chat">
+<body id="<?php echo $log[5];?>" class="chat">
 
 <header>
   <?php require '../include/nav.php'?>
@@ -70,6 +75,9 @@ if(!isset($_SESSION['login']))
       <div>
       <!-- AFFICHAGE DES CANAUX DE DISCUSSION -->
         <ul id="liste_channel"> 
+          <?php if($log[5] == "admin")
+          {
+          ?>
           <li class="ajout_channel">
             <svg data-toggle="modal" data-target="#exampleModal" class="add_channel bi bi-plus-circle" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
@@ -77,6 +85,9 @@ if(!isset($_SESSION['login']))
               <path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/>
             </svg>
           </li>
+          <?php
+          }
+          ?>
         </ul>
       <!-- AFFICHAGE DES CANAUX DE DISCUSSION -->
       </div>

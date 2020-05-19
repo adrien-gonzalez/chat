@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 16 mai 2020 à 08:24
+-- Généré le :  mar. 19 mai 2020 à 12:33
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -35,13 +35,13 @@ CREATE TABLE IF NOT EXISTS `chan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(35) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `chan`
 --
 
-INSERT DELAYED INTO `chan` (`id`, `name`) VALUES
+INSERT INTO `chan` (`id`, `name`) VALUES
 (1, 'Général'),
 (3, 'Aide');
 
@@ -59,13 +59,13 @@ CREATE TABLE IF NOT EXISTS `message` (
   `message` varchar(255) NOT NULL,
   `date_hour` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=189 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=190 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `message`
 --
 
-INSERT DELAYED INTO `message` (`id`, `id_user`, `id_chan`, `message`, `date_hour`) VALUES
+INSERT INTO `message` (`id`, `id_user`, `id_chan`, `message`, `date_hour`) VALUES
 (188, 2, 1, 'ok', '2020-05-14 11:54:31'),
 (187, 2, 1, 'ed', '2020-05-14 11:52:30'),
 (179, 1, 1, 'Salut', '2020-05-14 11:04:44'),
@@ -86,7 +86,15 @@ CREATE TABLE IF NOT EXISTS `rank` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(35) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `rank`
+--
+
+INSERT INTO `rank` (`id`, `name`) VALUES
+(1, 'admin'),
+(2, 'membre');
 
 -- --------------------------------------------------------
 
@@ -102,17 +110,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `login` varchar(35) NOT NULL,
   `password` varchar(155) NOT NULL,
   `mail` varchar(155) NOT NULL,
-  `rank` int(11) NOT NULL,
+  `rank` varchar(30) NOT NULL DEFAULT 'membre',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT DELAYED INTO `user` (`id`, `name`, `surname`, `login`, `password`, `mail`, `rank`) VALUES
-(1, 'Adrien', 'Gonzalez', 'Firefou', 'RxtTpf80', 'adrien1361@hotmail.fr', 0),
-(2, 'Alexandre', 'Gonzalez', 'Walken99', 'Z728i599', 'adrien1361@gmail.com', 0);
+INSERT INTO `user` (`id`, `name`, `surname`, `login`, `password`, `mail`, `rank`) VALUES
+(1, 'Adrien', 'Gonzalez', 'Firefou', 'RxtTpf80', 'adrien1361@hotmail.fr', '0'),
+(5, 'mimi', 'mimi', 'mimi', '$2y$05$/CfPNqaE7YM5An6/cwx4kOx.gQceiAFFVQStuyr/fJ6ZXJ0S3Erxm', 'mimi@gmail.com', 'membre'),
+(3, 'nana', 'nana', 'nana', '$2y$05$Lon39U4c3bz14jqzwQXXTOqwSwuvUqI0Mzw5GQHLHqNDR1OHCiaFK', 'nana@gmail.com', 'admin');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
