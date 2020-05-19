@@ -66,6 +66,7 @@ if(isset($_POST["submit"])){
     else{
         $_SESSION["user"]->connexion($_POST["login"],$_POST["psw"]);
         $_SESSION["login"] = $_POST['login'];
+        $_SESSION['psw'] = $_POST['psw'];
         if($_SESSION['user']->getrank() == "admin"){
             $_SESSION["perm"] = true;
         }
