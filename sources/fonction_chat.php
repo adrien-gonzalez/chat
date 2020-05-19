@@ -53,6 +53,15 @@ else if (isset($_POST['nom_channel'])){
 	$insert_channel = "INSERT INTO chan values (NULL, '$nom_channel')";
 	mysqli_query($base, $insert_channel);
 }
+else if(isset($_POST['id_chan']))
+{
+	
+	$delete_mess = "DELETE FROM message WHERE id_chan = '$id_chan'";
+	mysqli_query($base, $delete_mess);
+	$id_chan = $_POST['id_chan'];
+	$delete_chan = "DELETE FROM chan WHERE id ='$id_chan'";
+	mysqli_query($base, $delete_chan);
+}
 else
 {
 	$req_channel = "SELECT * FROM chan";
