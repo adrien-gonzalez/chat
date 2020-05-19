@@ -18,10 +18,13 @@ class admin extends user{
     {
         $i = 0;
         $this->connect();
-        $request = "SELECT id,login,name,surname,mail FROM user";
+        $request = "SELECT id,login,name,surname,mail FROM user where rank = 'membre'";
         $query = mysqli_query($this->connexion,$request);
         $fetch = mysqli_fetch_all($query);
+        if ($fetch==true){
         ?>
+
+        <h2>Les membres</h2>
             <table>
                 <tbody>
                         <tr>
@@ -30,6 +33,7 @@ class admin extends user{
                         <th>Name</th>
                         <th>Surname</th>
                         <th>Mail</th>
+                        <th>Rank</th>
                         </tr>
         <?php
        foreach($fetch as list($id,$login,$name,$surname,$mail))
@@ -43,7 +47,10 @@ class admin extends user{
                        <td><?php echo  $name; ?></td>
                        <td><?php echo  $surname;  ?></td>
                        <td><?php echo  $mail; ?></td>
-                       <td><a href="fiche_membre.php?id=<?php echo $id ?>">Profil</</td>
+                       
+
+                       
+                       <td><input  class="btn btn-lg btn-success" type="button" onClick="delete_user(<?php echo $id; ?>)" name="delete"  value="Delete"></td>
                        
                        
        
@@ -58,14 +65,83 @@ class admin extends user{
            
        <?php
        }
-       $i++
+    
+       $i++;
        ?>
            
            </tbody> 
             </table>
+    
         <?php
+        }else{
+            
+            echo "<h2>Les membres</h2><h4>Pas de membre encore inscrit</h4>";
+        }
     }
+    public function tableau_admin()
+    {
+        $i = 0;
+        $this->connect();
+        $request = "SELECT id,login,name,surname,mail FROM user where rank = 'admin'";
+        $query = mysqli_query($this->connexion,$request);
+        $fetch = mysqli_fetch_all($query);
+        if ($fetch==true){
+        ?>
 
+        <h2>Les admins</h2>
+            <table>
+                <tbody>
+                        <tr>
+                        <th>ID</th>    
+                        <th>Login</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Mail</th>
+                        
+                        </tr>
+        <?php
+       foreach($fetch as list($id,$login,$name,$surname,$mail))
+       {
+        
+            ?>
+             
+          
+                       <td><?php echo  $id; ?></td>
+                       <td><?php echo  $login; ?></td> 
+                       <td><?php echo  $name; ?></td>
+                       <td><?php echo  $surname;  ?></td>
+                       <td><?php echo  $mail; ?></td>
+                       
+                       <td><input  class="btn btn-lg btn-success" type="button" onClick="delete_user(<?php echo $id; ?>)" name="delete"  value="Delete"></td>
+                       
+
+                       
+                       
+       
+                       <tr>
+                       <td></td> 
+                       <td></td> 
+                       <td></td> 
+                       <td></td> 
+                       <td></td> 
+                       </tr> 
+          
+           
+       <?php
+       }
+    
+       $i++;
+       ?>
+           
+           </tbody> 
+            </table>
+    
+        <?php
+        }else{
+            
+            echo "<h2>Les membres</h2><h5>Pas de membre encore inscrit</h5>";
+        }
+    }
 
 }
 ?>

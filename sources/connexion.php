@@ -1,6 +1,6 @@
 <?php 
-require 'class/bdd.php';
-require 'class/user.php';
+require '../class/bdd.php';
+require '../class/user.php';
 
 session_start();
 
@@ -12,7 +12,7 @@ if(!isset($_SESSION['user'])){
     $_SESSION['user'] = new user();
 }
 if($_SESSION['user']->isConnected() != false){
-    header('Location:index.php');
+    header('Location: ../');
 }
 ?>
 <!DOCTYPE html>
@@ -26,14 +26,14 @@ if($_SESSION['user']->isConnected() != false){
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script type="text/javascript" src="js/connexion.js"></script>
-        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="../js/connexion.js"></script>
+        <link rel="stylesheet" href="../css/style.css">
         
 
 </head>
 
 <header>
-<?php require 'include/nav.php'?>
+<?php require '../include/nav.php'?>
 </header>
 <body>
 
@@ -44,7 +44,7 @@ if($_SESSION['user']->isConnected() != false){
 <section class="container center">
 
 <h1> Connexion </h1>
-        <form name="connexion" action="sources/chat.php" method="post">
+        <form name="connexion" method="post">
         
             <label>Identifiant : </label>
             <input type="text" name="login" required><br>
@@ -65,11 +65,11 @@ if(isset($_POST["submit"])){
     }
     else{
         $_SESSION["user"]->connexion($_POST["login"],$_POST["psw"]);
-        $_SESSION["login"] = true;
+        $_SESSION["login"] = $_POST['login'];
         if($_SESSION['user']->getrank() == "admin"){
             $_SESSION["perm"] = true;
         }
-        header('location:index.php');
+        header('location: chat.php');
     }
     
 }
@@ -83,7 +83,7 @@ if(isset($_POST["submit"])){
 </main>
 
 <footer>
-<?php require 'include/footer.php'?>
+<?php require '../include/footer.php'?>
 </footer>
 
 </body>

@@ -1,6 +1,6 @@
 <?php 
-require 'class/bdd.php';
-require 'class/user.php';
+require '../class/bdd.php';
+require '../class/user.php';
 session_start();
 
 if(!isset($_SESSION['bdd']))
@@ -11,7 +11,7 @@ if(!isset($_SESSION['user'])){
     $_SESSION['user'] = new user();
 }
 if($_SESSION['user']->isConnected() != true){
-    header('Location:index.php');
+    header('Location: ../');
 }?>
 <!DOCTYPE html>
 <html>
@@ -25,12 +25,12 @@ if($_SESSION['user']->isConnected() != true){
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script type="text/javascript" src="js/profil.js"></script>
-        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="../js/profil.js"></script>
+        <link rel="stylesheet" href="../css/style.css">
         
 </head>
 <header>
-<?php require 'include/nav.php'?>
+<?php require '../include/nav.php'?>
 </header>
 <body>
 
@@ -117,6 +117,6 @@ if($_SESSION['user']->isConnected() != true){
 
 </body>
 <footer>
-<?php require 'include/footer.php'?>
+<?php require '../include/footer.php'?>
 </footer>
 </html>

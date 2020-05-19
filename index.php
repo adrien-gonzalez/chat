@@ -53,7 +53,7 @@ if(!isset($_SESSION['user'])){
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
         
         <p><a class="btn btn-lg btn-success" href="sources/chat.php" role="button">Chat</a>
-        <a class="btn btn-lg btn-success" href="profil.php" role="button">Mon Profil</a></p>
+        <a class="btn btn-lg btn-success" href="sources/profil.php" role="button">Mon Profil</a></p>
 </div>
       <div class="row">
     <div class="col-sm-4">
@@ -81,8 +81,8 @@ if(!isset($_SESSION['user'])){
         <h1 class="display-3">Pouik Interface</h1>
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
         
-        <p><a class="btn btn-lg btn-success" href="inscription.php" role="button">S'inscrire</a>
-        <a class="btn btn-lg btn-success" href="connexion.php" role="button">Se connecter</a></p>
+        <p><a class="btn btn-lg btn-success" href="sources/inscription.php" role="button">S'inscrire</a>
+        <a class="btn btn-lg btn-success" href="sources/connexion.php" role="button">Se connecter</a></p>
 </div>
 
       <div class="row">

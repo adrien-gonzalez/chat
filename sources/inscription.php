@@ -1,6 +1,6 @@
 <?php
-require 'class/bdd.php';
-require 'class/user.php';
+require '../class/bdd.php';
+require '../class/user.php';
 
 session_start();
 
@@ -12,7 +12,7 @@ if(!isset($_SESSION['user'])){
     $_SESSION['user'] = new user();
 }
 if($_SESSION['user']->isConnected() != false){
-    header('Location:index.php');
+    header('Location: ../');
 }
 
 ?>
@@ -27,11 +27,11 @@ if($_SESSION['user']->isConnected() != false){
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script type="text/javascript" src="js/inscription.js"></script>
-        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="../js/inscription.js"></script>
+        <link rel="stylesheet" href="../css/style.css">
 </head>
 <header>
-<?php require 'include/nav.php'?>
+<?php require '../include/nav.php'?>
 </header>
 <body>
 
@@ -86,7 +86,7 @@ if($_SESSION['user']->isConnected() != false){
 if(isset($_POST['submit'])){
     
 $_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],$_POST['mail'],$_POST['psw'],$_POST['pswconf']);
-header ('location:connexion.php');
+header ('location: connexion.php');
 }
 
 ?>
@@ -99,7 +99,7 @@ header ('location:connexion.php');
 
 </body>
 <footer>
-<?php require 'include/footer.php'?>
+<?php require '../include/footer.php'?>
 </footer>
 
 </html>
