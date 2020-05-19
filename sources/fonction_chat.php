@@ -46,6 +46,13 @@ else if(isset($_POST['id_svg']))
 
 
 }
+
+else if (isset($_POST['nom_channel'])){
+	
+	$nom_channel = $_POST['nom_channel'];
+	$insert_channel = "INSERT INTO chan values (NULL, '$nom_channel')";
+	mysqli_query($base, $insert_channel);
+}
 else
 {
 	$req_channel = "SELECT * FROM chan";

@@ -77,8 +77,8 @@ public function connexion($login,$psw){
                     $this->surname= $result["surname"];
                     $this->mail= $result["mail"];
                     $this->rank= $result["rank"];
-                    $this->pp= $result["pp"];
-                    return [$this->id,$this->login,$this->name,$this->surname,$this->mail,$this->rank,$this->pp];
+
+                    return [$this->id,$this->login,$this->name,$this->surname,$this->mail,$this->rank];
                 }
                 else{
                     return false;
@@ -111,7 +111,7 @@ public function disconnect(){
         $this->surname = NULL;
         $this->mail = NULL;
         $this->rank = NULL;
-        $this->pp = NULL;
+     
     }
 
 public function desinscription()

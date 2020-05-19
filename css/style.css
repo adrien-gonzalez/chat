@@ -30,3 +30,11 @@ footer{
     background-color: rgba(34, 33, 33, 0.609);
     color: honeydew;
 }
+
+#erreur{
+    display: flex;
+    justify-content: center;
+    color: red;
+    font-size: large;
+    
+}

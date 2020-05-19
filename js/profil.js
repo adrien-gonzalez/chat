@@ -2,12 +2,7 @@ window.onload=function(){
 document.forms["profil"].addEventListener("submit", function(evenement) { 
     var erreur= document.getElementById("erreur");
 
-   if (document.getElementsByName("login").value == "") {
-       evenement.preventDefault();
-       erreur.innerHTML="Login Obligatoire !";
-       document.getElementByName("login").focus();
-   }
-   else if (document.getElementsByName("login").value.length > 25) {
+    if (document.getElementsByName("login").value.length > 25) {
        evenement.preventDefault();
        erreur.innerHTML="25 Caracteres Max";
        document.getElementByName("login").focus();

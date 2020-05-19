@@ -33,7 +33,7 @@ class admin extends user{
                         <th>Name</th>
                         <th>Surname</th>
                         <th>Mail</th>
-                        <th>Rank</th>
+                        
                         </tr>
         <?php
        foreach($fetch as list($id,$login,$name,$surname,$mail))
@@ -51,6 +51,7 @@ class admin extends user{
 
                        
                        <td><input  class="btn btn-lg btn-success" type="button" onClick="delete_user(<?php echo $id; ?>)" name="delete"  value="Delete"></td>
+                       <td><input  class="btn btn-lg btn-success" type="button" onClick="upgrade_user(<?php echo $id; ?>)" name="up"  value="Upgrade"></td>
                        
                        
        
@@ -66,7 +67,7 @@ class admin extends user{
        <?php
        }
     
-       $i++
+       $i++;
        ?>
            
            </tbody> 
@@ -112,8 +113,8 @@ class admin extends user{
                        <td><?php echo  $surname;  ?></td>
                        <td><?php echo  $mail; ?></td>
                        
-                       <td><input  class="btn btn-lg btn-success" type="button" onClick="delete_admin(<?php echo $id; ?>)" name="delete"  value="Delete"></td>
-                       
+                       <td><input  class="btn btn-lg btn-success" type="button" onClick="delete_user(<?php echo $id; ?>)" name="delete"  value="Delete"></td>
+                       <td><input  class="btn btn-lg btn-success" type="button" onClick="downgrade_user(<?php echo $id; ?>)" name="down"  value="Downgrade"></td>
 
                        
                        
@@ -130,7 +131,7 @@ class admin extends user{
        <?php
        }
     
-       $i++
+       $i++;
        ?>
            
            </tbody> 
