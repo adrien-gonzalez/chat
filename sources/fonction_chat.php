@@ -56,6 +56,9 @@ else if (isset($_POST['nom_channel'])){
 else if(isset($_POST['id_chan']))
 {
 	$id_chan = $_POST['id_chan'];
+
+	$delete_mess = "DELETE FROM message WHERE id_chan = '$id_chan'";
+	mysqli_query($base, $delete_mess);
 	$delete_chan = "DELETE FROM chan WHERE id ='$id_chan'";
 	mysqli_query($base, $delete_chan);
 }
