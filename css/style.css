@@ -38,3 +38,10 @@ footer{
     font-size: large;
     
 }
+#yeah{
+    display: flex;
+    justify-content: center;
+    color: rgb(13, 163, 13);
+    font-size: large;
+    
+}

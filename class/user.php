@@ -30,6 +30,7 @@ class user extends bdd{
                     $this->connect();
                     $psw = password_hash($psw, PASSWORD_BCRYPT, array('cost' => 5));
                     $requete = "INSERT INTO `user`(`login`,`name`, `surname`, `mail`,`password`,`rank`) VALUES ('$login','$name','$surname','$mail','$psw','membre')";
+                    var_dump($requete);
                     $query = mysqli_query($this->connexion,$requete);
                     return "ok";
                     
@@ -140,11 +141,11 @@ public function profil($confpsw,$login,$mail,$psw){
     $request= "SELECT password FROM user WHERE id = $this->id";
     $query = mysqli_query($this->connexion,$request);
     $fetchpsw = mysqli_fetch_assoc($query);
-    var_dump($fetchpsw);
+    
         if(password_verify($confpsw,$fetchpsw["password"])){
             if($login != NULL){
                 $result=$this->execute("SELECT login FROM user WHERE login = \"$login\"");
-                var_dump($result);
+                
                 if(empty($result)){
                     $this->login = $login;
                 }

@@ -44,49 +44,66 @@ if($_SESSION['user']->isConnected() != false){
         <form name="inscription" action="inscription.php" method="post">
         
             <label for="login">Identifiant :</label>
-            <input type="text" name="login" id="login">
+            <input type="text" name="login" id="login" required>
             <!-- à faire pop en js-->
-            <span id="login_empty"></span>
+            <span name="login_ok"></span>
 </br>
             <label for="firstName">Prénom :</label>
-            <input type="text" name="name" id="name" >
+            <input type="text" name="name" id="name" required >
             <!-- à faire pop en js-->
             <span id="title"></span>
 </br>
             <label for="surname">Nom :</label>
-            <input type="text" name="surname" id="surname" >
+            <input type="text" name="surname" id="surname" required>
              <!-- à faire pop en js-->
              <span id="surname_empty"></span>
             <br>
             <label for="mail">Mail :</label>
-            <input type="mail" name="mail" id="mail"  class="validate">
+            <input type="mail" name="mail" id="mail"  class="validate" required>
              <!-- à faire pop en js-->
              <span id="mail_empty"></span>
             <br>
             <label for="psw">Mot de passe :</label>
-            <input type="password" name="psw" id="psw"  minlength="5">
+            <input type="password" name="psw" id="psw"  minlength="5" autocomplete="on" required>
              <!-- à faire pop en js-->
              <span id="psw_empty"></span>
             <br>
             <label for="pswconf">Confirmation du mot de passe :</label>
-            <input type="password" name="pswconf" id="pswconf"  minlength="5" >
+            <input type="password" name="pswconf" id="pswconf"  minlength="5" autocomplete="on" required >
              <!-- à faire pop en js-->
              <span id="pswconf_empty"></span>
             <br>
             
+            <div id="b"></div>
+            <input  class="btn btn-lg btn-success"TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();"/>
             
-            <input  class="btn btn-lg btn-success"TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
-            <input class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer"></button>
         </form>
 <p id="erreur"></p>
+<p id="yeah"></p>
     </section>
 
 <?php
 
 if(isset($_POST['submit'])){
     
-$_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],$_POST['mail'],$_POST['psw'],$_POST['pswconf']);
+if ($_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],$_POST['mail'],$_POST['psw'],$_POST['pswconf'])=="ok"){
 header ('location: connexion.php');
+}
+elseif($_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],$_POST["psw"],$_POST['pswconf'],$_POST['mail']) == "log"){
+    ?>
+        <p>L'identifiant ou l'email est déjà pris.</p>
+    <?php
+}
+elseif($_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],$_POST["psw"],$_POST['pswconf'],$_POST['mail']) == "empty"){
+    ?>
+        <p>Veuillez remplir tous les champs.</p>
+    <?php
+}
+elseif($_SESSION["user"]->inscription($_POST['login'],$_POST['name'],$_POST['surname'],$_POST["psw"],$_POST['psw'],$_POST['mail']) == "psw"){
+    ?>
+        <p>Les mots de passes ne sont pas identiques.</p>
+    <?php
+}
 }
 
 ?>

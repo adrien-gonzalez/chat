@@ -58,40 +58,48 @@ if($_SESSION['user']->isConnected() != true){
                 <form action="profil.php" method="POST" name="profil">
                     
                     <label>Identifiant : </label>
-                    <input type="text" name="login" value="<?php echo $_SESSION['user']->getlogin(); ?>"><br>
+                    <input type="text"  id="login" name="login" value="<?php echo $_SESSION['user']->getlogin(); ?>"><br>
                     <label>Mail :</label>
-                    <input type="mail" name="mail" value="<?php echo $_SESSION['user']->getmail() ?>"><br>
+                    <input type="mail" id="mail" name="mail" value="<?php echo $_SESSION['user']->getmail() ?>"><br>
                     <label>Mot de passe : </label>
-                    <input type="password" name="psw" minlength="5" /><br>
-                    <label>Confirmation du mot de passe :</label>
-                    <input type="password" name="pswconf" required><br>
+                    <input type="password" name="psw"  id="psw" autocomplete="off" required minlength="5"/><br>
+                    <label>Confirmation Mot de passe:</label>
+                    <input type="password" name="pswconf" id="pswconf" required autocomplete="off"><br>
                     
                     <input class="btn btn-lg btn-success" TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
                     <input class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer"></button>
                     
                 </form>
                 <p id="erreur"></p>
+                <p id="yeah"></p>
 
         <?php 
         if(isset($_POST["submit"]))
         {
-            //add function qui delete trace laisser par utilisateur
-            $_SESSION["user"]->profil($_POST['login'],$_POST['mail'],$_POST['psw'],$_POST['pswconf']);
+                if(!empty($_POST["pswconf"])){
+                    if(!empty($_POST["login"])){
+                        $_SESSION['user']->profil($_POST["pswconf"],$_POST["login"],NULL,NULL,NULL);
+                    }
+                    if(!empty($_POST["mail"])){
+                        $_SESSION['user']->profil($_POST["pswconf"],NULL,$_POST["mail"],NULL);
+                    }
+                    if(!empty($_POST["password"])){
+                        $_SESSION['user']->profil($_POST["pswconf"],NULL,NULL,$_POST["psw"]);
+                    }
+                }
+                else{
+                    ?>
+                    <p>Veuillez rentrer votre ancien mot de passe pour valider vos changements</p>
+                <?php
+            }
         }
+          
+
+        
         ?>
     </section>
      
     
-
-    <section class="bloc">
-        <h2></h2>
-
-        <article>
-
-
-        </article>
-    </section>
-
 
     <section class="bloc">
         <h3>Me désinscrire</h3> 
@@ -102,7 +110,7 @@ if($_SESSION['user']->isConnected() != true){
         <?php 
         if(isset($_POST["desinscription"]))
         {
-            //add function qui delete trace laisser par utilisateur
+            
             $_SESSION["user"]->desinscription('id');
         }
         ?>

@@ -47,14 +47,17 @@ if($_SESSION['user']->isConnected() != false){
         <form name="connexion" method="post">
         
             <label>Identifiant : </label>
-            <input type="text" name="login" required><br>
+            <input type="text" name="login" id="login" required>
+            
+            <br>
             <label>Mot de passe :</label>
-            <input type="password" name="psw"  minlength="5" required ><br>
+            <input type="password" name="psw" id="psw" minlength="5" autocomplete="on" required ><br>
 
-            <input  class="btn btn-lg btn-success" TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();">
-            <input  class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer"></button>
+            <input  class="btn btn-lg btn-success" TYPE="button" VALUE="Reset le formulaire" onClick="this.form.reset();"/>
+            <input  class="btn btn-lg btn-success" type="submit" name="submit" id="submit"  value="Envoyer"/>
         </form>
         <p id="erreur"></p>
+        <p id="yeah"></p>
 
 <?php
 if(isset($_POST["submit"])){
