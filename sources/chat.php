@@ -102,7 +102,7 @@ if(!isset($_SESSION['login']))
   		</div>
   		<div class="message-input">
   			<div class="wrap">
-  			<input type="text" placeholder="Écrivez votre message..." />
+  			<input id="message_send" type="text" placeholder="Écrivez votre message..." />
   			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
   			</div>
   		</div>

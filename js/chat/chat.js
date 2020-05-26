@@ -1,6 +1,9 @@
 affichage_channel()
 setTimeout(affichage_message, 100);
 
+ 
+
+
 function affichage_channel(){
 
 	$.ajax({
@@ -73,6 +76,7 @@ function affichage_channel(){
 function affichage_message(){
 	
 	var channel = $(".active").attr('id')
+
 	$.ajax({
 		url : 'fonction_chat.php',
 		type: 'POST',
@@ -82,6 +86,7 @@ function affichage_message(){
 		{
 
 			$(".sent").remove()
+			$('.trash').remove()
 			var nbr_messages=0
 			for(i=0; i<Object.keys(data).length;i++)
 			{
@@ -104,16 +109,15 @@ function affichage_message(){
 				   	if(j == 2)
 				   	{
 				   		if(result[login] == $("#name_user").text())
-				   		{
+				   		{	
 				   			$('<li id="'+result[id]+'" class="sent">'+ result[login] +'<br><div id="contenue_'+result[id]+'" class="contenue"><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
-							$('.message-input input').val(null);
 							$("#preview_"+result[id_chan]).html('<span>Toi : </span>' + result[message]);
+							$("#contenue_"+result[id]).after('<svg id="svg_'+result[id]+'" class="trash bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/></svg>')
 				   		}
 				   		else
 				   		{
 
 						   	$('<li id="sent_'+result[id]+'"  class="sent">'+ result[login] +'<br><div id="'+result[id]+'"><p>' + result[message] + '</p><p id="heure">'+result[date]+'</p></div></li>').appendTo($('.messages ul'));
-							$('.message-input input').val(null);
 							$("#sent_"+result[id]).css({"display" : "flex", "flex-direction": "column", "align-items": "flex-end"})
 							$("#"+result[id]).css({"background-color" : "#F5F5F5", "color": "black"})
 						}
@@ -125,6 +129,7 @@ function affichage_message(){
 				$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 		}
 	});
+	setTimeout(affichage_message,1000);
 }
 
 
@@ -171,6 +176,7 @@ function insert_message(){
 	    success:function(data){
 		}
 	});
+	$('#message_send').val("");
 }
 
 function delete_message(){
@@ -206,10 +212,8 @@ function delete_channel(){
 $('.submit').click(function() {
 
 	if($(".message-input input").val() != ""){
-
   		insert_message()
 		setTimeout(affichage_message, 100);
-
 	}
 });
 
@@ -235,21 +239,10 @@ $( document ).ready(function() {
 
 	});
 
-	$("body").on("mouseenter", ".contenue", function () {
-
-		$(".trash").remove()
-		var id_message= $(this).attr('id')
-		$("#"+id_message).after('<svg id="svg_'+id_message+'" class="trash bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/></svg>')
-
-
-
-	});
-
 	$("body").on("click", ".trash", function () {
 
-
 		id= $(this).attr('id')
-		id_svg=id.substr(13)
+		id_svg=id.substr(4)
 		$("#"+id_svg).remove()
 		delete_message()
 		setTimeout(affichage_message, 100)
